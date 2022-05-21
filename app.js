@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 class App {
     constructor() {
@@ -7,11 +8,16 @@ class App {
 
         this.app.use( require('body-parser').json() )
 
+        this.app.use(cors({
+            origin: '*',
+            methods: '*'
+        }))
+
         this.database()
 
         this.routes()
     
-        this.app.listen(process.env.PORT || 3000, function() {
+        this.app.listen(process.env.PORT || 4000 , function() {
             console.log("Trabajando en el puerto 3000" + process.env.PORT || 3000)
         });
     }

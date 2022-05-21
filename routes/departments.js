@@ -13,13 +13,18 @@ class Departments {
   }
 
   newDepartment(req, res) {
+    const codigo = req.body.codigo
+    const departamento = req.body.departamento
     let departmentItem = new Department({
-      codigo: req.body.codigo,
-      departamento: req.body.departamento
+      codigo: codigo,
+      departamento: departamento
     });
     departmentItem.save().then( doc => {
         res.json({
-          ok: true
+          ok: true,
+          codigo: codigo,
+          departamento: departamento,
+          _id: doc._id
         })
       }, err => {
         res.status(500).json({
@@ -44,13 +49,19 @@ class Departments {
   }
 
   changeDepartment(req, res) {
-      Department.updateOne({_id: req.body._id}, {
-        codigo: req.body.codigo,
-        departamento: req.body.departamento
+    const id = req.body._id;
+    const codigo = req.body.codigo
+    const departamento = req.body.departamento
+      Department.updateOne({_id: id}, {
+        codigo: codigo,
+        departamento: departamento
       }).then( doc => {
-          res.json({
-              ok: true
-          })
+        res.json({
+          ok: true,
+          codigo: codigo,
+          departamento: departamento,
+          _id: id
+        })
       }, err => {
           res.status(500).json({
               error: 'Error al cargar el nuevo departamento'
